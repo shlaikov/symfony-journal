@@ -22,7 +22,7 @@ class Translatable
 
         $text = $this->multiExplode([
             ',', '.', ' ',
-            ':', '(', ')'
+            ':', '(', '['
         ], mb_strtolower($result));
 
         return implode('-', $text);
