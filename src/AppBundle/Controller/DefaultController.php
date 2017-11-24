@@ -17,7 +17,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         return $this->render('default/index.html.twig', [
-            'base_dir' => '}{ Y i',
+            'base_dir' => 'index page',
         ]);
     }
 

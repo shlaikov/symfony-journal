@@ -1,6 +1,6 @@
 {
-    "name": "alexis/.checkout",
-    "license": "proprietary",
+    "name": "alexis/journal",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-4": {
