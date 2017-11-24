@@ -32,6 +32,7 @@ class News implements TaggableInterface
     private $alias;
 
     /**
+     * @ORM\Column(type="string", nullable=false)
      * @Assert\NotBlank()
      */
     protected $title;
@@ -93,6 +94,11 @@ class News implements TaggableInterface
     public function getBody()
     {
         return $this->body;
+    }
+
+    public function getCreated_Time()
+    {
+        return $this->createdTime;
     }
 
     public function addTag(TagInterface $tag)
