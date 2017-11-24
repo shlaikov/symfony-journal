@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Journal{% endblock %}
+{% block body %}
+    <div>
+        <h3>{{ news.title }}</h3>
+    </div>
+    <article>
+        <div>
+            <p>
+                {{ news.body }}
+            </p>
+        </div>
+        <div>
+            {{ news.created_time|date("Y:m:d H:m") }}
+        </div>
+    </article>
+{% endblock %}

@@ -22,6 +22,23 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/post/{alias}")
+     */
+    public function articleAction($alias)
+    {
+        $em = $this->getDoctrine();
+        $newsRepository = $em->getRepository(News::class);
+
+        $news = $newsRepository->findOneBy([
+            'alias' => $alias
+        ]);
+
+        return $this->render('default/preview.html.twig', [
+            'news' => $news,
+        ]);
+    }
+
+    /**
      * @Route("/create", name="create")
      */
     public function addAction(Request $request)
