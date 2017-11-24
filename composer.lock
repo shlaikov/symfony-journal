@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbf2d316b65c3b1fb0d0d1b05a3cee72",
+    "content-hash": "979604d34473af6209d06264d4168858",
     "packages": [
         {
             "name": "beelab/tag-bundle",
