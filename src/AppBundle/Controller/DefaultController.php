@@ -16,8 +16,12 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        $em = $this->getDoctrine();
+        $repository = $em->getRepository(News::class);
+        $news = $repository->findAll();
+
         return $this->render('default/index.html.twig', [
-            'base_dir' => 'index page',
+            'news' => $news,
         ]);
     }
 
@@ -27,9 +31,9 @@ class DefaultController extends Controller
     public function articleAction($alias)
     {
         $em = $this->getDoctrine();
-        $newsRepository = $em->getRepository(News::class);
+        $repository = $em->getRepository(News::class);
 
-        $news = $newsRepository->findOneBy([
+        $news = $repository->findOneBy([
             'alias' => $alias
         ]);
 
@@ -61,12 +65,25 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/edit/{alias}", requirements={"alias" = "\d+"})
+     * @Route("/edit/{alias}")
      */
-    public function editAction($alias)
+    public function editAction($alias, Request $request)
     {
-        $news = new News();
+        $em = $this->getDoctrine();
+        $news = $em->getRepository(News::class)->findOneBy([
+            'alias' => $alias
+        ]);
+
         $form = $this->createForm(FormType::class, $news);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
 
         return $this->render('default/edit-post.html.twig', [
             'form_edit' => $form->createView(),

@@ -1,11 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Journal{% endblock %}
+{% block navigation %}
+    <nav>
+        <ul>
+            <li><a href="{{ path('create') }}">Создать статью</a></li>
+        </ul>
+    </nav>
+    <hr>
+{% endblock %}
 {% block body %}
-<nav>
-    <ul>
-        <li><a href="/create">Создать статью</a></li>
-    </ul>
-</nav>
-<hr>
+<div>
+    {% for post in news %}
+        <div>
+            <h3><a href="{{ path('app_default_article', {'alias' : post.alias}) }}">{{ post.title }}</a></h3>
+            <article>
+                <div>
+                    <p>
+                        {{ post.body }}
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        {{ post.created_time|date("Y:m:d H:m") }}
+                    </p>
+                </div>
+            </article>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
