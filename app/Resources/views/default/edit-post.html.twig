@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редактировать пост{% endblock %}
+{% block navigation %}
+    <nav>
+        <ul>
+            <li><a href="{{ path('homepage') }}">На главную</a></li>
+        </ul>
+    </nav>
+    <hr>
+{% endblock %}
+{% block body %}
+    <div>
+        {{ form(form_edit) }}
+    </div>
+{% endblock %}
