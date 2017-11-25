@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\News;
 use AppBundle\Forms\FormType;
+use AppBundle\Utils\Persistence;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +17,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine();
-        $repository = $em->getRepository(News::class);
-        $news = $repository->findAll();
-
         return $this->render('default/index.html.twig', [
-            'news' => $news,
+            'news' => Persistence::getInstance()->findAll($this->getDoctrine()),
         ]);
     }
 
@@ -30,15 +27,10 @@ class DefaultController extends Controller
      */
     public function articleAction($alias)
     {
-        $em = $this->getDoctrine();
-        $repository = $em->getRepository(News::class);
-
-        $news = $repository->findOneBy([
-            'alias' => $alias
-        ]);
-
         return $this->render('default/preview.html.twig', [
-            'news' => $news,
+            'news' => Persistence::getInstance()->findOneBy(
+                $alias, $this->getDoctrine()
+            ),
         ]);
     }
 
@@ -69,10 +61,9 @@ class DefaultController extends Controller
      */
     public function editAction($alias, Request $request)
     {
-        $em = $this->getDoctrine();
-        $news = $em->getRepository(News::class)->findOneBy([
-            'alias' => $alias
-        ]);
+        $news = Persistence::getInstance()->findOneBy(
+            $alias, $this->getDoctrine()
+        );
 
         $form = $this->createForm(FormType::class, $news);
         $form->handleRequest($request);
