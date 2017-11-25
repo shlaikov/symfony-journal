@@ -7,6 +7,7 @@ use AppBundle\Forms\FormType;
 use AppBundle\Utils\Persistence;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -44,11 +45,17 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($news);
-            $em->flush();
+            $arr = explode( ',', $request->request->all()['form']['tagsText']);
 
-            return $this->redirectToRoute('homepage');
+            if (count($arr) > 3) {
+                throw new HttpNotFoundException('More than three tags can not be');
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($news);
+                $em->flush();
+
+                return $this->redirectToRoute('homepage');
+            }
         }
 
         return $this->render('default/add-post.html.twig', [
@@ -69,11 +76,17 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($news);
-            $em->flush();
+            $arr = explode( ',', $request->request->all()['form']['tagsText']);
 
-            return $this->redirectToRoute('homepage');
+            if (count($arr) > 3) {
+                throw new HttpNotFoundException('More than three tags can not be');
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($news);
+                $em->flush();
+
+                return $this->redirectToRoute('homepage');
+            }
         }
 
         return $this->render('default/edit-post.html.twig', [
