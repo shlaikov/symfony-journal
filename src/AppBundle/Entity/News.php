@@ -75,6 +75,7 @@ class News implements TaggableInterface
     {
         $this->alias = (new Translatable($title))->draw();
         $this->title = $title;
+        $this->editedTime = new DateTime('now');
 
         return $this;
     }
@@ -87,6 +88,7 @@ class News implements TaggableInterface
     public function setBody($body)
     {
         $this->body = $body;
+        $this->editedTime = new DateTime('now');
 
         return $this;
     }
@@ -128,7 +130,8 @@ class News implements TaggableInterface
 
     public function setTagsText($tagsText)
     {
-        $this->tagsText = $tagsText;
+        $this->tagsText   = $tagsText;
+        $this->editedTime = new DateTime('now');
     }
 
     public function getTagsText()
