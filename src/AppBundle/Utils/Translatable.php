@@ -21,17 +21,17 @@ class Translatable
         }
 
         $text = $this->multiExplode([
-            ',', '.', ' ',
+            ',', '<', ' ',
             ':', '(', '['
         ], mb_strtolower($result));
 
         return implode('-', $text);
     }
 
-    private function transliterate($text)
+    protected function transliterate($text)
     {
         $cyrillic = [
-            'ж',  'ч',  'щ',   'ш',  'ю', 'ы', 'а', 'б', 'в', 'г',
+            'ж',  'ч',  'щ',   'ш',  'ю', 'ы','ё', 'а', 'б', 'в', 'г',
             'д', 'е', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п',
             'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ъ', 'ь', 'я',
             'Ж',  'Ч',  'Щ',   'Ш',  'Ю', 'Ы', 'А', 'Б', 'В', 'Г',
@@ -39,7 +39,7 @@ class Translatable
             'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ъ', 'Ь', 'Я'
         ];
         $latin = [
-            'zh', 'ch', 'sht', 'sh', 'yu', '', 'a', 'b', 'v', 'g',
+            'zh', 'ch', 'sht', 'sh', 'yu', '', 'e', 'a', 'b', 'v', 'g',
             'd', 'e', 'z', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
             'r', 's', 't', 'u', 'f', 'h', 'c', 'y', 'x', 'ya',
             'Zh', 'Ch', 'Sht', 'Sh', 'Yu', '', 'A', 'B', 'V', 'G',
@@ -50,14 +50,14 @@ class Translatable
         return $text ? str_replace($cyrillic, $latin, $text) : null;
     }
 
-    private function multiExplode($delimiters, $string)
+    protected function multiExplode($delimiters, $string)
     {
         $mixed = str_replace($delimiters, $delimiters[0], $string);
 
         return explode($delimiters[0], $mixed);
     }
 
-    private function isRussian($text)
+    protected function isRussian($text)
     {
         return preg_match('/[А-Яа-яЁё]/u', $text);
     }

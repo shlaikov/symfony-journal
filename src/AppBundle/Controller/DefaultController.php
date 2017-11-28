@@ -45,7 +45,7 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $arr = explode( ',', $request->request->all()['form']['tagsText']);
+            $arr = explode(',', $request->request->all()['form']['tagsText']);
 
             if (count($arr) > 3) {
                 throw new HttpNotFoundException('More than three tags can not be');
@@ -76,7 +76,7 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $arr = explode( ',', $request->request->all()['form']['tagsText']);
+            $arr = explode(',', $request->request->all()['form']['tagsText']);
 
             if (count($arr) > 3) {
                 throw new HttpNotFoundException('More than three tags can not be');
